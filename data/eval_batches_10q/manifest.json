@@ -1,0 +1,19 @@
+﻿{
+    "input":  "C:\\Users\\admin\\Desktop\\MLflowBAKAL\\data\\otazky-najpravo-doplnene.json",
+    "output_root":  "C:\\Users\\admin\\Desktop\\MLflowBAKAL\\data\\eval_batches_10q",
+    "batch_size":  3,
+    "questions_total":  29,
+    "batches_total":  10,
+    "files":  [
+                  "batch_01.json",
+                  "batch_02.json",
+                  "batch_03.json",
+                  "batch_04.json",
+                  "batch_05.json",
+                  "batch_06.json",
+                  "batch_07.json",
+                  "batch_08.json",
+                  "batch_09.json",
+                  "batch_10.json"
+              ]
+}

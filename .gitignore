@@ -1,0 +1,84 @@
+# =============================================================================
+# Python
+# =============================================================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# =============================================================================
+# Virtual Environment
+# =============================================================================
+.venv/
+venv/
+ENV/
+
+# =============================================================================
+# IDE
+# =============================================================================
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# =============================================================================
+# Project-specific: Secrets & Credentials
+# =============================================================================
+.env
+*.env
+key.json
+*.pem
+*.key
+
+# =============================================================================
+# Project-specific: Data & Artifacts
+# =============================================================================
+# MLflow tracking data (large, machine-specific)
+mlruns/
+mlartifacts/
+mlflow.db
+
+# ChromaDB indexes (large, should be regenerated)
+kb/chroma*/
+
+# Logs
+*.log
+chroma.log
+
+# Generated reports (optional - may want to track these)
+# reports/
+
+# Local environment snapshots
+freeze_working.txt
+
+# Zip archives
+*.zip
+
+# =============================================================================
+# OS-specific
+# =============================================================================
+.DS_Store
+Thumbs.db
