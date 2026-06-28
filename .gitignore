@@ -82,3 +82,6 @@ freeze_working.txt
 # =============================================================================
 .DS_Store
 Thumbs.db
+
+.playwright-mcp/
+.codex_tmp_spendwise/

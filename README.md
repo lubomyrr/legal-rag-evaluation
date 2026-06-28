@@ -1,58 +1,69 @@
-# legal-rag-reliability
+# Legal RAG Evaluation System
 
-Experimental prototype for a bachelor's thesis on evaluating the reliability of answers produced by a legal RAG system over Slovak legal texts.
+Academic bachelor thesis prototype for evaluating the reliability of answers produced by a legal RAG system over Slovak legal texts.
 
-## Repository contents
+The project focuses on legal question answering, retrieval over legal documents, LLM-based answer generation, and evaluation of whether generated answers correctly use the retrieved legal sources.
 
-- `rag_core/` - retrieval, answer generation, and evaluation logic
-- `scripts/` - dataset collection, indexing, and batch evaluation scripts
-- `data/` - legal question dataset and prepared evaluation batches
-- `eval/` - saved evaluation outputs used in the experiments
+## Project Goal
 
-## Setup
+The goal of this project is not to build a production legal assistant, but to create an experimental system for testing how reliable legal RAG answers are.
 
-1. Create a Python virtual environment.
-2. Install dependencies:
+The work focuses on:
 
-```bash
-pip install -r requirements.txt
-```
+- preparing a legal QA dataset,
+- retrieving relevant legal documents,
+- generating answers with an LLM,
+- tracking experiments with MLflow,
+- evaluating answer reliability using custom metrics.
 
-3. Create a local `.env` file with the runtime settings required by `rag_core/config.py`.
-4. Provide the local ChromaDB index used in the experiment before running the RAG pipeline.
+## Main Features
 
-## Main scripts
+- Legal QA dataset preparation
+- Local retrieval pipeline over Slovak legal documents
+- ChromaDB-based vector search
+- OpenAI-compatible LLM client support
+- MLflow experiment tracking
+- Batch evaluation pipeline
+- Custom evaluation metrics for legal RAG reliability
 
-Collect legal Q&A data from Najpravo:
+## Evaluation Focus
 
-```bash
-python scripts/scrape.py
-```
+The evaluation is based on three main aspects:
 
-Create or inspect the local JSON-based Chroma collection:
+1. Source selection  
+   Whether the system selected relevant legal sources.
 
-```bash
-python scripts/create_json_collections.py --help
-```
+2. Groundedness / faithfulness  
+   Whether the generated answer is supported by the cited legal text.
 
-Prepare evaluation batches:
+3. Correct use of legal references  
+   Whether the answer uses the legal source correctly and aligns with the expert answer.
 
-```bash
-python scripts/run_eval_batches.py
-```
+## Tech Stack
 
-Run local evaluation:
+**Core:**
 
-```bash
-python -m rag_core.eval_local
-```
+- Python
+- RAG architecture
+- ChromaDB
+- MLflow / MLflow GenAI
+- OpenAI-compatible LLM APIs
+- pandas
+- JSON dataset processing
 
-Summarize saved batch outputs:
+**Secondary:**
 
-```bash
-python scripts/summarize_eval_batches.py
-```
+- LangChain
+- RAGAS
+- Pydantic
+- BeautifulSoup
+- requests
 
-## Notes
+## Repository Structure
 
-This repository is an academic prototype. Local secrets, virtual environments, MLflow runs, logs, and generated ChromaDB indexes are intentionally excluded from version control.
+```text
+rag_core/     Core retrieval, generation, and evaluation logic
+scripts/      Dataset preparation, indexing, and batch evaluation scripts
+data/         Legal QA dataset and prepared evaluation batches
+eval/         Saved evaluation outputs and experiment artifacts
+config/       Local model/provider configuration examples
