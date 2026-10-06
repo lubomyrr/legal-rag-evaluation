@@ -1,87 +1,51 @@
-# =============================================================================
-# Python
-# =============================================================================
+# Python bytecode and tool caches
 __pycache__/
 *.py[cod]
-*$py.class
-*.so
-.Python
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
+
+# Virtual environments
+.venv/
+venv/
+
+# Build and packaging outputs
+build/
+dist/
+*.egg-info/
+
+# Coverage reports
 .coverage
 .coverage.*
 htmlcov/
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
 
-# =============================================================================
-# Virtual Environment
-# =============================================================================
-.venv/
-venv/
-ENV/
+# Local environment files and credentials
+.env
+.env.*
+*.env
+!.env.example
+!.env.sample
+!*.env.example
+key.json
+*.pem
+*.key
 
-# =============================================================================
-# IDE
-# =============================================================================
+# Local experiment storage and generated indexes
+/mlruns/
+/mlartifacts/
+/mlflow.db
+/mlflow.db-*
+/kb/chroma*/
+.ingest_checkpoint_*.json
+
+# Logs
+*.log
+
+# Local editor settings and OS files
 .idea/
 .vscode/
 *.swp
 *.swo
 *~
-
-# =============================================================================
-# Project-specific: Secrets & Credentials
-# =============================================================================
-.env
-*.env
-key.json
-*.pem
-*.key
-
-# =============================================================================
-# Project-specific: Data & Artifacts
-# =============================================================================
-# MLflow tracking data (large, machine-specific)
-mlruns/
-mlartifacts/
-mlflow.db
-
-# ChromaDB indexes (large, should be regenerated)
-kb/chroma*/
-
-# Logs
-*.log
-chroma.log
-
-# Generated reports (optional - may want to track these)
-# reports/
-
-# Local environment snapshots
-freeze_working.txt
-
-# Zip archives
-*.zip
-
-# =============================================================================
-# OS-specific
-# =============================================================================
 .DS_Store
 Thumbs.db
-
-.playwright-mcp/
-.codex_tmp_spendwise/
