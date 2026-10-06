@@ -111,21 +111,3 @@ Despite its name, `run_eval_batches.py` only prepares data; evaluation runs thro
 | **python-dotenv** | Loading local experiment configuration from `.env` files. |
 
 The active evaluation uses custom scorers. Packages such as RAGAS, datasets, and Groq remain in `requirements.txt` from the experiment environment but are not directly used by the current pipeline.
-
-## Where to start reading
-
-1. Open the [saved summary](eval/batches/summary_02/summary.md) and a [detailed faithfulness report](eval/batches/batches_01/metric2_span_faithfulness.md) to see the output.
-2. Read [`generate_rag_answer()` in eval_pipeline.py](rag_core/eval_pipeline.py) for the question-to-answer flow, alongside [prompts.py](rag_core/prompts.py).
-3. Read [deterministic_core.py](rag_core/deterministic_core.py) and [scorers.py](rag_core/scorers.py) for the metric implementations.
-4. Read [`run_eval()` in eval_local.py](rag_core/eval_local.py) to see how data, generation, scoring, and MLflow fit together.
-5. Read [create_json_collections.py](scripts/create_json_collections.py) for indexing, including batching, retries, and checkpoint-based resume.
-
-## Running context and scope
-
-The evaluation entry point is `python -m rag_core.eval_local --env-file .env`. A run requires an existing Chroma collection, an Ollama embedding endpoint, and configured generation and judge endpoints. Use the same embedding model for indexing and queries.
-
-Configuration includes `CHROMA_DIR`, `CHROMA_COLLECTION_NAME`, `EMB_MODEL`, `EMBEDDING_BASE_URL`, the `LLM_*` and `JUDGE_*` settings, `RETRIEVE_K`, `EVAL_QUESTIONS_FILE`, `EVAL_GOLD_PROVISIONS_FILE`, and `EVAL_OUT_DIR`. MLflow tracking is configurable and otherwise defaults to a local `mlruns` directory. Credentials, local indexes, and MLflow run data are not included in this checkout.
-
-The saved experiment is small: **29 evaluation questions** drawn from an enriched QA dataset. Its provision texts also supply the index, so the results describe retrieval and generation over this prepared corpus. Metric 1 measures agreement with the supplied annotations; LLM judge scores provide model-based assessments. These results do not establish coverage of Slovak legislation or performance on unseen legal questions.
-
-Model endpoints and paths are configurable, while the prompts, provision identifiers, and data schema remain specific to Slovak legal QA.
