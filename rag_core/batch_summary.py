@@ -85,52 +85,46 @@ def _parse_json_list(raw: str) -> List[str]:
 
 
 def _parse_metric1(batch_dirs: List[Path]) -> Dict[str, Any]:
-    questions_total = 0
-    tp = 0
-    fp = 0
-    fn = 0
-    fp_counts: Dict[str, int] = {}
-    fn_counts: Dict[str, int] = {}
+    totals = dict.fromkeys(
+        ("Questions with gold annotations", "True positives", "False positives", "False negatives"),
+        0,
+    )
+    error_counts: Dict[str, Dict[str, int]] = {
+        "False positives": {},
+        "False negatives": {},
+    }
 
     for batch_dir in batch_dirs:
         text = _load_text(batch_dir / "metric1_statute_grounding.md")
         for match in SUMMARY_INT_RE.finditer(text):
             label = match.group("label")
-            value = int(match.group("value"))
-            if label == "Questions with gold annotations":
-                questions_total += value
-            elif label == "True positives":
-                tp += value
-            elif label == "False positives":
-                fp += value
-            elif label == "False negatives":
-                fn += value
+            totals[label] += int(match.group("value"))
 
         for question_match in QUESTION_SECTION_RE.finditer(text):
             body = question_match.group("body")
             for list_match in LIST_LINE_RE.finditer(body):
-                label = list_match.group("label")
-                values = _parse_json_list(list_match.group("value"))
-                if label == "False positives":
-                    for law_id in values:
-                        fp_counts[law_id] = fp_counts.get(law_id, 0) + 1
-                elif label == "False negatives":
-                    for law_id in values:
-                        fn_counts[law_id] = fn_counts.get(law_id, 0) + 1
+                counts = error_counts.get(list_match.group("label"))
+                if counts is None:
+                    continue
+                for law_id in _parse_json_list(list_match.group("value")):
+                    counts[law_id] = counts.get(law_id, 0) + 1
 
+    tp = totals["True positives"]
+    fp = totals["False positives"]
+    fn = totals["False negatives"]
     precision = float(tp / (tp + fp)) if (tp + fp) else 0.0
     recall = float(tp / (tp + fn)) if (tp + fn) else 0.0
     f1 = float((2 * precision * recall) / (precision + recall)) if (precision + recall) else 0.0
     return {
-        "questions_total": questions_total,
+        "questions_total": totals["Questions with gold annotations"],
         "tp": tp,
         "fp": fp,
         "fn": fn,
         "precision": precision,
         "recall": recall,
         "f1": f1,
-        "most_common_false_positives": sorted(fp_counts.items(), key=lambda item: (-item[1], item[0]))[:10],
-        "most_common_false_negatives": sorted(fn_counts.items(), key=lambda item: (-item[1], item[0]))[:10],
+        "most_common_false_positives": sorted(error_counts["False positives"].items(), key=lambda item: (-item[1], item[0]))[:10],
+        "most_common_false_negatives": sorted(error_counts["False negatives"].items(), key=lambda item: (-item[1], item[0]))[:10],
     }
 
 
