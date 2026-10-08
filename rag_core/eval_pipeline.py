@@ -98,7 +98,7 @@ def _normalize_citacie_json_items(payload: Any) -> List[Dict[str, str]]:
     for item in payload:
         if not isinstance(item, dict):
             raise ValueError("Each citacie_json item must be an object")
-        if set(item.keys()) != required_keys:
+        if set(item) != required_keys:
             raise ValueError(
                 "Each citacie_json item must contain only zakon and odpoved_vygenerovana"
             )
